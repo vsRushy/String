@@ -24,6 +24,7 @@ public:
 		while (c[n] != '\0')
 			n++;
 
+		allocated_memory = n;
 		string = new char[n];
 
 		while (*string++ = *c++);
@@ -52,6 +53,46 @@ public:
 	}
 
 	// Utility functions
+	String operator=(const char* c)
+	{
+		uint n = 0;
+		while (c[n] != '\0')
+			n++;
+
+		if (n > allocated_memory)
+		{
+			delete[] string;
+			string = new char[allocated_memory];
+
+			while (*string++ = *c++);
+		}
+
+		allocated_memory = n;
+
+		return (*this);
+	}
+
+	/*
+	String operator=(const String& s)
+	{
+	allocated_memory = s.allocated_memory;
+	string = new char[allocated_memory];
+
+	for (uint i = 0; i < allocated_memory; i++)
+	{
+	string[i] = s.string[i];
+	}
+
+	return (*this);
+	}
+	*/
+
+	bool operator==(const char* c) const
+	{
+		String s(c);
+		return (*this == s);
+	}
+
 	bool operator==(const String& s) const
 	{
 		if (allocated_memory != s.allocated_memory)
@@ -66,33 +107,6 @@ public:
 		}
 
 		return (n == allocated_memory);
-	}
-
-	bool operator==(const char* c) const
-	{
-		String s(c);
-		return (*this == s);
-	}
-
-	String operator=(const String& s)
-	{
-		allocated_memory = s.allocated_memory;
-		string = new char[allocated_memory];
-
-		for (uint i = 0; i < allocated_memory; i++)
-		{
-			string[i] = s.string[i];
-		}
-
-		return (*this);
-	}
-
-	String operator=(const char* c)
-	{
-		String s(c);
-		*this = s;
-
-		return (*this);
 	}
 };
 
