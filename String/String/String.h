@@ -32,8 +32,6 @@ public:
 		}
 	}
 
-	// Take a look at static_assert
-
 	String(const String& s)
 	{
 		allocated_memory = s.allocated_memory;
