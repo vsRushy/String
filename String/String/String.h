@@ -47,6 +47,7 @@ public:
 		{
 			delete[] string;
 			string = nullptr;
+			allocated_memory = 0;
 		}
 	}
 
