@@ -43,7 +43,11 @@ public:
 	// Destructor
 	~String()
 	{
-		delete[] string;
+		if (string != nullptr)
+		{
+			delete[] string;
+			string = nullptr;
+		}
 	}
 
 	// Utility functions
