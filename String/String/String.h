@@ -1,69 +1,71 @@
 #ifndef __STRING_H__
 #define __STRING_H__
 
+#include <assert.h>
+
 typedef unsigned int uint;
 
 class String
 {
 public:
-	char* data;
-	uint length;
+	char* string = nullptr;
+	uint allocated_memory = 0u;
 
 public:
 	// Constructors
 	String()
-	{
-		data = new char[0];
-		length = 0;
-	}
+	{}
 
 	String(const char* c)
 	{
+		assert(c != nullptr);
+
 		uint n = 0;
 		while (c[n] != '\0')
-		{
-			length = n;
-			data = new char[n];
-		}
+			n++;
+
+		string = new char[n];
 
 		for (uint i = 0; i < n; i++)
 		{
-			data[i] = c[i];
+			string[i] = c[i];
 		}
 	}
 
+	// Take a look at static_assert
+
 	String(const String& s)
 	{
-		length = s.length;
-		data = new char[length];
+		allocated_memory = s.allocated_memory;
+		string = new char[allocated_memory];
 
-		for (uint i = 0; i < length; i++)
+		for (uint i = 0; i < allocated_memory; i++)
 		{
-			data[i] = s.data[i];
+			string[i] = s.string[i];
 		}
 	}
 
 	// Destructor
 	~String()
 	{
-		delete[] data;
+		delete[] string;
 	}
 
 	// Utility functions
 	bool operator==(const String& s) const
 	{
-		if (length != s.length)
+		if (allocated_memory != s.allocated_memory)
 		{
 			return false;
 		}
 
 		uint n = 0;
-		while (data[n] == s.data[n])
+		while (string[n] == s.string[n])
 		{
 			n++;
 		}
 
-		return (n == length);
+		return (n == allocated_memory);
 	}
 
 	bool operator==(const char* c) const
@@ -74,12 +76,12 @@ public:
 
 	String operator=(const String& s)
 	{
-		length = s.length;
-		data = new char[length];
+		allocated_memory = s.allocated_memory;
+		string = new char[allocated_memory];
 
-		for (uint i = 0; i < length; i++)
+		for (uint i = 0; i < allocated_memory; i++)
 		{
-			data[i] = s.data[i];
+			string[i] = s.string[i];
 		}
 
 		return (*this);
