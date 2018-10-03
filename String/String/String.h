@@ -26,10 +26,7 @@ public:
 
 		string = new char[n];
 
-		for (uint i = 0; i < n; i++)
-		{
-			string[i] = c[i];
-		}
+		while (*string++ = *c++);
 	}
 
 	String(const String& s)
